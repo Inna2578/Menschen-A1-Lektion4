@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#faf9f6">
+  <meta name="description" content="Lernwortschatz 4: карточки по темам и тест по немецким словам. Работает офлайн.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WortWerk">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+  <title>WortWerk · Lernwortschatz 4</title>
+</head>
+<body>
+<div class="shell">
+  <header class="header">
+    <button id="backButton" class="icon-button back" type="button" aria-label="Назад" hidden>←</button>
+    <div class="brand"><span class="brand-symbol">W.</span><span>WortWerk</span></div>
+    <span class="lesson-tag">LEKTION 04</span>
+  </header>
+  <main>
+    <section id="homeScreen" class="screen" aria-labelledby="homeTitle">
+      <div class="home-intro">
+        <span class="eyebrow">DEUTSCH · A1</span>
+        <h1 id="homeTitle">Lernwortschatz 4</h1>
+        <p>Выбери задание и тренируй новые слова.</p>
+      </div>
+      <div class="home-modes" role="group" aria-label="Выбор задания">
+        <button class="menu-card" id="openCards" type="button">
+          <span class="menu-card-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="10" width="21" height="24" rx="3"/><path d="M14 7h18a3 3 0 0 1 3 3v21"/><path d="M14 19h9M14 24h9"/></svg></span>
+          <span class="menu-card-copy"><strong>Карточки</strong><small>Слова по четырём темам</small></span>
+          <span class="menu-arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="menu-card" id="openQuiz" type="button">
+          <span class="menu-card-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="26" height="26" rx="4"/><path d="M13 16l3 3 5-6M23 17h5M13 27h15"/></svg></span>
+          <span class="menu-card-copy"><strong>Тест</strong><small>10 вопросов · выбери перевод</small></span>
+          <span class="menu-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+      <p class="home-note">46 слов и выражений · Немецкий ↔ русский</p>
+    </section>
+
+    <section id="topicsScreen" class="screen" hidden aria-labelledby="topicsTitle">
+      <div class="screen-heading">
+        <span class="eyebrow">КАРТОЧКИ</span>
+        <h1 id="topicsTitle">Выбери тему</h1>
+        <p>Открывай карточки и нажимай на них, чтобы увидеть перевод.</p>
+      </div>
+      <div id="topicList" class="topic-list"></div>
+    </section>
+
+    <section id="cardsScreen" class="screen practice-screen" hidden aria-labelledby="cardsTitle">
+      <div class="practice-heading">
+        <div><span class="eyebrow">КАРТОЧКИ</span><h1 id="cardsTitle">Мебель</h1></div>
+        <span class="count" id="cardCount">1 / 13</span>
+      </div>
+      <div class="progress-track"><div id="cardProgress" class="progress-fill"></div></div>
+      <div class="direction-row">
+        <span>Перевод</span>
+        <button id="directionButton" class="direction-button" type="button" aria-label="Поменять направление перевода">DE → RU <span aria-hidden="true">⇄</span></button>
+      </div>
+      <button id="flashcard" class="flashcard" type="button" aria-label="Перевернуть карточку" aria-pressed="false">
+        <span id="cardFaceLabel" class="card-side">НЕМЕЦКИЙ</span>
+        <span id="cardWord" class="card-word" lang="de">das Bett</span>
+        <span id="cardDetail" class="card-detail"></span>
+        <span class="card-tap-hint" id="cardHint">Нажми, чтобы увидеть перевод ↻</span>
+      </button>
+      <div class="card-nav">
+        <button id="prevCard" class="nav-button" type="button" aria-label="Предыдущее слово">← <span>Назад</span></button>
+        <button id="speakCard" class="sound-button" type="button" aria-label="Произнести слово по-немецки" title="Произнести по-немецки"><svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4zM15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/></svg></button>
+        <button id="nextCard" class="nav-button" type="button"><span>Далее</span> →</button>
+      </div>
+    </section>
+
+    <section id="quizScreen" class="screen practice-screen" hidden aria-labelledby="quizTitle">
+      <div class="practice-heading">
+        <div><span class="eyebrow">ТЕСТ</span><h1 id="quizTitle">Проверь себя</h1></div>
+        <span class="count" id="quizCount">1 / 10</span>
+      </div>
+      <div class="progress-track"><div id="quizProgress" class="progress-fill"></div></div>
+      <div id="quizQuestionArea">
+        <p class="quiz-prompt">Как переводится?</p>
+        <h2 id="quizWord" class="quiz-word" lang="de">das Bett</h2>
+        <div id="quizOptions" class="quiz-options"></div>
+        <p id="quizFeedback" class="quiz-feedback" hidden aria-live="polite"></p>
+        <button id="nextQuestion" class="primary-button" type="button" hidden>Следующий вопрос →</button>
+      </div>
+      <div id="quizResults" class="result" hidden>
+        <div class="result-icon">✓</div>
+        <h2>Тест завершён!</h2>
+        <p id="resultScore" class="result-score"></p>
+        <button id="restartQuiz" class="primary-button" type="button">Пройти ещё раз</button>
+        <button id="returnHome" class="secondary-button" type="button">В меню</button>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
